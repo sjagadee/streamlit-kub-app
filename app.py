@@ -37,10 +37,6 @@ if "messages" not in st.session_state:
 with st.sidebar:
     st.title("🧠 Agent OS")
     st.markdown("---")
-
-    base_url = "https://rag-api-577488894085.us-central1.run.app"
-
-    st.markdown("---")
     st.success(f"Logfire: {LOGFIRE_STATUS}")
     st.info(f"Memory ID: {st.session_state.session_id[:8]}")
     
@@ -75,7 +71,7 @@ if prompt := st.chat_input("Ask about your documentation..."):
                     # DISTRIBUTED TRACE: Calling Backend
                     with logfire.span("Calling RAG Backend"):
                         # Get backend URL from env, or default to local if not set
-                        base_url = os.getenv("BACKEND_URL", "http://localhost:8000")
+                        base_url = "https://rag-api-577488894085.us-central1.run.app"
                         url = f"{base_url}/query"
                         payload = {"query": prompt, "thread_id": st.session_state.session_id}
                         response = requests.post(url, json=payload, timeout=120)
